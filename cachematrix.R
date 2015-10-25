@@ -22,23 +22,19 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
+## The cacheSolve function calculates the inverse of the special "matrix" created with the makeCacheMatrix function.
+## However, it first checks to see if the inverse has already been calculated.
+## If so, it gets the inverse from the cache and skips the computation.
+## Otherwise, it calculates the inverse of the matrix and sets the value of the inverse in the cache via the setinverse function.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
-}
-
-
-##The following function calculates the mean of the special "vector" created with the above function. However, it first checks to see if the mean has already been calculated. If so, it gets the mean from the cache and skips the computation. Otherwise, it calculates the mean of the data and sets the value of the mean in the cache via the setmean function.
-
-cachemean <- function(x, ...) {
-        m <- x$getmean()
-        if(!is.null(m)) {
+        xinverse <- x$getinverse()
+        if(!is.null(xinverse)) {
                 message("getting cached data")
-                return(m)
+                return(xinverse)
         }
-        data <- x$get()
-        m <- mean(data, ...)
-        x$setmean(m)
-        m
+        xmatrix <- x$get()
+        xinverse <- solve(xmatrix)
+        x$setinverse(xinverse)
+        xinverse
 }
